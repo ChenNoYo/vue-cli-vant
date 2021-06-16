@@ -1,54 +1,54 @@
-export function getJson(data) {
+export function getJson (data) {
   return JSON.parse(JSON.stringify(data))
 }
 
 /**
  * 驼峰转换下划线
  */
-export function toLine(name) {
+export function toLine (name) {
   return name.replace(/([A-Z])/g, '_$1').toLowerCase()
 }
 
 /**
  * 下划线转换驼峰
  */
-export function toHump(name) {
-  return name.replace(/\_(\w)/g, function (all, letter) {
-    return letter.toUpperCase();
-  });
+export function toHump (name) {
+  return name.replace(/_(\w)/g, function (all, letter) {
+    return letter.toUpperCase()
+  })
 }
 
-//设置cookie
-export function setCookie(name, value, day) {
-  var date = new Date();
-  date.setDate(date.getDate() + day);
-  document.cookie = name + '=' + value + ';expires=' + date;
+// 设置cookie
+export function setCookie (name, value, day) {
+  var date = new Date()
+  date.setDate(date.getDate() + day)
+  document.cookie = name + '=' + value + ';expires=' + date
   // document.cookie = name + '=' + value;
 };
 
-//获取cookie
-export function getCookie(name) {
-  var reg = RegExp(name + '=([^;]+)');
-  var arr = document.cookie.match(reg);
+// 获取cookie
+export function getCookie (name) {
+  var reg = RegExp(name + '=([^;]+)')
+  var arr = document.cookie.match(reg)
   if (arr) {
-    return arr[1];
+    return arr[1]
   } else {
-    return '';
+    return ''
   }
 };
 
-//删除cookie
-export function delCookie(name) {
+// 删除cookie
+export function delCookie (name) {
   // setCookie(name, '');
-  setCookie(name, '', -1);
+  setCookie(name, '', -1)
 };
 
-export function getArray(data) {
-  let arr = []
+export function getArray (data) {
+  const arr = []
   for (let i = 1; i <= data; i++) {
     arr.push(i)
   }
-  return arr;
+  return arr
 }
 
 /**
@@ -60,61 +60,61 @@ export const formatDate = (date, fmt) => {
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
-  let o = {
+  const o = {
     'M+': date.getMonth() + 1,
     'd+': date.getDate(),
     'h+': date.getHours(),
     'm+': date.getMinutes(),
     's+': date.getSeconds()
   }
-  for (let k in o) {
+  for (const k in o) {
     if (new RegExp(`(${k})`).test(fmt)) {
-      let str = o[k] + ''
+      const str = o[k] + ''
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
     }
   }
   return fmt
 }
 
-function padLeftZero(str) {
+function padLeftZero (str) {
   return ('00' + str).substr(str.length)
 }
 
 // 字符串字母转大写
-export function upperCase(str) {
-  let arr = str.split("");
-  let newStr = "";
+export function upperCase (str) {
+  const arr = str.split('')
+  let newStr = ''
   // 通过数组的forEach方法来遍历数组
   arr.forEach(function (value) {
     if (value >= 'a' && value <= 'z') {
-      newStr += value.toUpperCase();
+      newStr += value.toUpperCase()
     } else {
-      newStr += value;
+      newStr += value
     }
-  });
-  return newStr;
+  })
+  return newStr
 }
 // 字符串字母转小写
-export function lowerCase(str) {
-  let arr = str.split("");
-  let newStr = "";
-  //通过for循环遍历数组
+export function lowerCase (str) {
+  const arr = str.split('')
+  let newStr = ''
+  // 通过for循环遍历数组
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] >= 'A' && arr[i] <= 'Z') {
-      newStr += arr[i].toLowerCase();
+      newStr += arr[i].toLowerCase()
     } else {
-      newStr += arr[i];
+      newStr += arr[i]
     }
   }
-  return newStr;
+  return newStr
 }
 // 手机号验证
-export function isPhone(val) {
+export function isPhone (val) {
   // return /^1[0-9]{10}$/.test(val) || /^\d{8}$/.test(val) || /^\d{7}$/.test(val) || /^\d{6}$/.test(val);
   return /^1(3|4|5|6|7|8|9)\d{9}$/.test(val)
 }
 // 座机验证
-export function isTel(val) {
+export function isTel (val) {
   return /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(val)
 }
 /**
@@ -122,7 +122,7 @@ export function isTel(val) {
  * @param val 身份证
  * @returns boolean
  */
-export function isIdCard(val) {
+export function isIdCard (val) {
   if (!val || val === '') {
     return false
   }
@@ -162,83 +162,83 @@ export function isIdCard(val) {
     81: '香港',
     82: '澳门',
     91: '国外 '
-  };
+  }
 
   if (!val || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(val)) {
-    return false;
+    return false
   } else if (!city[val.substr(0, 2)]) {
-    return false;
+    return false
   } else {
     if (val.length === 18) {
-      val = val.split('');
+      val = val.split('')
       // ∑(ai×Wi)(mod 11)
       // 加权因子
-      const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+      const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
       // 校验位
-      const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
-      let sum = 0;
-      let ai = 0;
-      let wi = 0;
+      const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
+      let sum = 0
+      let ai = 0
+      let wi = 0
       for (let i = 0; i < 17; i++) {
-        ai = val[i];
-        wi = factor[i];
-        sum += ai * wi;
+        ai = val[i]
+        wi = factor[i]
+        sum += ai * wi
       }
-      const last = parity[sum % 11] + '';
+      const last = parity[sum % 11] + ''
       if (last !== val[17].toUpperCase()) {
-        return false;
+        return false
       }
     }
   }
-  return true;
+  return true
 }
 // 图片压缩
-export function compressImage(path, obj, callback) {
-  var img = new Image();
-  img.src = path;
+export function compressImage (path, obj, callback) {
+  var img = new Image()
+  img.src = path
   img.onload = function () {
-    var that = this;
+    var that = this
     // 默认按比例压缩
-    var w = that.width * 0.3,
-      h = that.height * 0.3,
-      scale = w / h;
-    w = obj.width || w;
-    h = obj.height || (w / scale);
-    var quality = 0.7; // 默认图片质量为0.7
-    //生成canvas
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
+    var w = that.width * 0.3
+    var h = that.height * 0.3
+    var scale = w / h
+    w = obj.width || w
+    h = obj.height || (w / scale)
+    var quality = 0.7 // 默认图片质量为0.7
+    // 生成canvas
+    var canvas = document.createElement('canvas')
+    var ctx = canvas.getContext('2d')
     // 创建属性节点
-    var anw = document.createAttribute("width");
-    anw.nodeValue = w;
-    var anh = document.createAttribute("height");
-    anh.nodeValue = h;
-    canvas.setAttributeNode(anw);
-    canvas.setAttributeNode(anh);
-    ctx.drawImage(that, 0, 0, w, h);
+    var anw = document.createAttribute('width')
+    anw.nodeValue = w
+    var anh = document.createAttribute('height')
+    anh.nodeValue = h
+    canvas.setAttributeNode(anw)
+    canvas.setAttributeNode(anh)
+    ctx.drawImage(that, 0, 0, w, h)
     // 图像质量
     if (obj.quality && obj.quality <= 1 && obj.quality > 0) {
-      quality = obj.quality;
+      quality = obj.quality
     }
     // quality值越小，所绘制出的图像越模糊
-    var base64 = canvas.toDataURL('image/jpeg', quality);
+    var base64 = canvas.toDataURL('image/jpeg', quality)
     // 回调函数返回base64的值
-    callback(base64);
+    callback(base64)
   }
 }
 
-function add0(m) {
+function add0 (m) {
   return m < 10 ? '0' + m : m
 }
 
-export function format(shijianchuo) {
-  //shijianchuo是整数，否则要parseInt转换
-  var time = new Date(shijianchuo);
-  var y = time.getFullYear();
-  var m = time.getMonth() + 1;
-  var d = time.getDate();
-  var h = time.getHours();
-  var mm = time.getMinutes();
-  var s = time.getSeconds();
-  return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+export function format (shijianchuo) {
+  // shijianchuo是整数，否则要parseInt转换
+  var time = new Date(shijianchuo)
+  var y = time.getFullYear()
+  var m = time.getMonth() + 1
+  var d = time.getDate()
+  var h = time.getHours()
+  var mm = time.getMinutes()
+  var s = time.getSeconds()
+  return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s)
 }

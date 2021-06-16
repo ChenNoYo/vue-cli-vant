@@ -72,42 +72,42 @@ export default {
           return Err
         }
         switch (idcard.length) {
-          case 15:
-            if ((parseInt(idcard.substr(6, 2)) + 1900) % 4 === 0 || ((parseInt(idcard.substr(6, 2)) + 1900) % 100 === 0 && (parseInt(idcard.substr(6, 2)) + 1900) % 4 === 0)) {
-              ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$/ // 测试出生日期的合法性
-            } else {
-              ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$/ // 测试出生日期的合法性
-            }
-            if (ereg.test(idcard)) {
+        case 15:
+          if ((parseInt(idcard.substr(6, 2)) + 1900) % 4 === 0 || ((parseInt(idcard.substr(6, 2)) + 1900) % 100 === 0 && (parseInt(idcard.substr(6, 2)) + 1900) % 4 === 0)) {
+            ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$/ // 测试出生日期的合法性
+          } else {
+            ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$/ // 测试出生日期的合法性
+          }
+          if (ereg.test(idcard)) {
+            Err = Errors[0]
+          } else {
+            Err = Errors[2]
+          }
+          return Err
+        case 18:
+          if (parseInt(idcard.substr(6, 4)) % 4 === 0 || (parseInt(idcard.substr(6, 4)) % 100 === 0 && parseInt(idcard.substr(6, 4)) % 4 === 0)) {
+            ereg = /^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$/ // 闰年出生日期的合法性正则表达式
+          } else {
+            ereg = /^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$/ // 平年出生日期的合法性正则表达式
+          }
+          if (ereg.test(idcard)) {
+            S = (parseInt(arr[0]) + parseInt(arr[10])) * 7 + (parseInt(arr[1]) + parseInt(arr[11])) * 9 + (parseInt(arr[2]) + parseInt(arr[12])) * 10 + (parseInt(arr[3]) + parseInt(arr[13])) * 5 + (parseInt(arr[4]) + parseInt(arr[14])) * 8 + (parseInt(arr[5]) + parseInt(arr[15])) * 4 + (parseInt(arr[6]) + parseInt(arr[16])) * 2 + parseInt(arr[7]) * 1 + parseInt(arr[8]) * 6 + parseInt(arr[9]) * 3
+            Y = S % 11
+            M = 'F'
+            JYM = '10X98765432'
+            M = JYM.substr(Y, 1)
+            if (M === arr[17]) {
               Err = Errors[0]
             } else {
-              Err = Errors[2]
+              Err = Errors[3]
             }
-            return Err
-          case 18:
-            if (parseInt(idcard.substr(6, 4)) % 4 === 0 || (parseInt(idcard.substr(6, 4)) % 100 === 0 && parseInt(idcard.substr(6, 4)) % 4 === 0)) {
-              ereg = /^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$/ // 闰年出生日期的合法性正则表达式
-            } else {
-              ereg = /^[1-9][0-9]{5}19[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$/ // 平年出生日期的合法性正则表达式
-            }
-            if (ereg.test(idcard)) {
-              S = (parseInt(arr[0]) + parseInt(arr[10])) * 7 + (parseInt(arr[1]) + parseInt(arr[11])) * 9 + (parseInt(arr[2]) + parseInt(arr[12])) * 10 + (parseInt(arr[3]) + parseInt(arr[13])) * 5 + (parseInt(arr[4]) + parseInt(arr[14])) * 8 + (parseInt(arr[5]) + parseInt(arr[15])) * 4 + (parseInt(arr[6]) + parseInt(arr[16])) * 2 + parseInt(arr[7]) * 1 + parseInt(arr[8]) * 6 + parseInt(arr[9]) * 3
-              Y = S % 11
-              M = 'F'
-              JYM = '10X98765432'
-              M = JYM.substr(Y, 1)
-              if (M === arr[17]) {
-                Err = Errors[0]
-              } else {
-                Err = Errors[3]
-              }
-            } else {
-              Err = Errors[2]
-            }
-            return Err
-          default:
-            Err = Errors[1]
-            return Err
+          } else {
+            Err = Errors[2]
+          }
+          return Err
+        default:
+          Err = Errors[1]
+          return Err
         }
       },
       // 判断输入框是否有表情
@@ -249,28 +249,28 @@ export default {
           var context = canvas.getContext('2d')
           // 判断图片方向，重置canvas大小，确定旋转角度，iphone默认的是home键在右方的横屏拍摄方式
           switch (dir) {
-            // iphone横屏拍摄，此时home键在左侧
-            case 3:
-              degree = 180
-              drawWidth = -width
-              drawHeight = -height
-              break
+          // iphone横屏拍摄，此时home键在左侧
+          case 3:
+            degree = 180
+            drawWidth = -width
+            drawHeight = -height
+            break
             // iphone竖屏拍摄，此时home键在下方(正常拿手机的方向)
-            case 6:
-              canvas.width = height
-              canvas.height = width
-              degree = 90
-              drawWidth = width
-              drawHeight = -height
-              break
+          case 6:
+            canvas.width = height
+            canvas.height = width
+            degree = 90
+            drawWidth = width
+            drawHeight = -height
+            break
             // iphone竖屏拍摄，此时home键在上方
-            case 8:
-              canvas.width = height
-              canvas.height = width
-              degree = 270
-              drawWidth = -width
-              drawHeight = height
-              break
+          case 8:
+            canvas.width = height
+            canvas.height = width
+            degree = 270
+            drawWidth = -width
+            drawHeight = height
+            break
           }
           // 使用canvas旋转校正
           context.rotate((degree * Math.PI) / 180)

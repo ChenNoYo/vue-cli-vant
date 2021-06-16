@@ -2,7 +2,7 @@
  * 手机号码验证
  */
 function RulePhone (val) {
-  let check = true;
+  let check = true
   if (/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
     check = true
   } else if (!val || val.length === 0) {
@@ -18,10 +18,10 @@ function RulePhone (val) {
  * @returns {{validator: function}}
  */
 function RuleBH (val) {
-  let check = true;
+  let check = true
   if (val === '') {
     check = true
-  } else if (/^[0-9a-zA-Z_]+$/.test(value)) {
+  } else if (/^[0-9a-zA-Z_]+$/.test(val)) {
     check = true
   } else {
     check = false
@@ -45,18 +45,18 @@ function RuleBH (val) {
  * @param label
  * @returns {{validator: function}}
  */
-function RuleNumber (label) {
-  let check = true;
+function RuleNumber (val) {
+  let check = true
   if (!val || val === '') {
     check = true
-  } else if (/^\d+$/.test(value)) {
+  } else if (/^\d+$/.test(val)) {
     check = true
   } else {
     check = false
   }
   return check
   // let checkNumber = (rule, value, callback) => {
-  //   if (!value || value === '') { 
+  //   if (!value || value === '') {
   //     callback()
   //   } else if (/^\d+$/.test(value)) {
   //     callback()
@@ -74,7 +74,7 @@ function RuleNumber (label) {
  * @returns {{validator: function}}
  */
 function RuleDecimals (val) {
-  let check = true;
+  let check = true
   if (!val || val === '') {
     check = true
   } else if (/^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(val)) {
@@ -84,7 +84,7 @@ function RuleDecimals (val) {
   }
   return check
   // let checkDecimals = (rule, value, callback) => {
-  //   if (!value || value === '') { 
+  //   if (!value || value === '') {
   //     callback()
   //   } else if ((value + '').length > 20) {
   //     callback(new Error(`长度必须在 0 到 20 之间`))
@@ -102,10 +102,10 @@ function RuleDecimals (val) {
  * 邮箱验证
  */
 function RuleEmail (val) {
-  let check = true;
+  let check = true
   if (!val || val === '') {
     check = true
-  } else if (/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(value)) {
+  } else if (/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(val)) {
     check = true
   } else {
     check = false
@@ -125,15 +125,14 @@ function RuleEmail (val) {
   // }
 }
 
-
 /**
  * 身份证号验证
  */
 function RuleIDCard (val) {
-  let check = true;
+  let check = true
   if (!val || val === '') {
     check = true
-  } else if (isIdCard(value)) {
+  } else if (isIdCard(val)) {
     check = true
   } else {
     check = false
@@ -189,36 +188,36 @@ const isIdCard = (val) => {
     81: '香港',
     82: '澳门',
     91: '国外 '
-  };
+  }
 
   if (!val || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(val)) {
-    return false;
+    return false
   } else if (!city[val.substr(0, 2)]) {
-    return false;
+    return false
   } else {
     if (val.length === 18) {
-      val = val.split('');
+      val = val.split('')
       // ∑(ai×Wi)(mod 11)
       // 加权因子
-      const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+      const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
       // 校验位
-      const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
-      let sum = 0;
-      let ai = 0;
-      let wi = 0;
+      const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
+      let sum = 0
+      let ai = 0
+      let wi = 0
       for (let i = 0; i < 17; i++) {
-        ai = val[i];
-        wi = factor[i];
-        sum += ai * wi;
+        ai = val[i]
+        wi = factor[i]
+        sum += ai * wi
       }
-      const last = parity[sum % 11] + '';
-      console.log('last', last);
+      const last = parity[sum % 11] + ''
+      console.log('last', last)
       if (last !== val[17].toUpperCase()) {
-        return false;
+        return false
       }
     }
   }
-  return true;
+  return true
 }
 
 export {
@@ -228,5 +227,5 @@ export {
   RuleEmail,
   RulePhone,
   RuleIDCard,
-  isIdCard,
+  isIdCard
 }

@@ -1,6 +1,5 @@
-
 import { create } from 'axios'
-import { Toast } from 'vant';
+import { Toast } from 'vant'
 import router from '../router'
 const axios = create({
   // 设置超时时间
@@ -16,7 +15,8 @@ axios.interceptors.request.use(
   },
   err => {
     return Promise.reject(err)
-  })
+  }
+)
 
 // 响应拦截器
 axios.interceptors.response.use(
@@ -39,30 +39,33 @@ axios.interceptors.response.use(
   },
   err => {
     return Promise.reject(err)
-  })
-// get，post请求方法
-export default {
-  get (url, params) {
-    return axios({
-      url: url,
-      method: 'get',
-      params,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Session-Id': localStorage.getItem('sessionId') ? localStorage.getItem('sessionId') : ''
-      },
-      withCredentials: true
-    })
-  },
-  post (url, data) {
-    return axios({
-      url: url,
-      method: 'post',
-      data,
-      headers: {
-        'Session-Id': localStorage.getItem('sessionId') ? localStorage.getItem('sessionId') : ''
-      },
-      withCredentials: true
-    })
   }
+)
+// get，post请求方法
+export function get (url, params) {
+  return axios({
+    url: url,
+    method: 'get',
+    params,
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Session-Id': localStorage.getItem('sessionId')
+        ? localStorage.getItem('sessionId')
+        : ''
+    },
+    withCredentials: true
+  })
+}
+export function post (url, data) {
+  return axios({
+    url: url,
+    method: 'post',
+    data,
+    headers: {
+      'Session-Id': localStorage.getItem('sessionId')
+        ? localStorage.getItem('sessionId')
+        : ''
+    },
+    withCredentials: true
+  })
 }
